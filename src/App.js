@@ -5,7 +5,6 @@ import ReduxThunk from 'redux-thunk';
 import firebase from 'firebase';
 import reducers from './reducers';
 import firebaseconfig from './config/firebaseconfig'
-import LoginForm from './components/LoginForm';
 import Router from './Router';
 
 class App extends Component {
