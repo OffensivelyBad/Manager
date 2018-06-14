@@ -1,8 +1,9 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import { View, Text, ListView } from 'react-native';
+import { ListView } from 'react-native';
 import { connect } from 'react-redux';
 import { employeeFetch } from '../actions';
+import ListItem from './ListItem';
 
 class EmployeeList extends Component {
 
@@ -24,18 +25,18 @@ class EmployeeList extends Component {
         this.dataSource = ds.cloneWithRows(employeeList);
     }
 
+    renderRow(employee) {
+        return <ListItem employee={employee} />;
+    }
+
     render() {
         console.log(this.props);
         return (
-            <View>
-                <Text>Employee list</Text>
-                <Text>Employee list</Text>
-                <Text>Employee list</Text>
-                <Text>Employee list</Text>
-                <Text>Employee list</Text>
-                <Text>Employee list</Text>
-                <Text>Employee list</Text>
-            </View>
+            <ListView
+                enableEmptySections
+                dataSource={this.dataSource}
+                renderRow={this.renderRow}
+            />
         );
     }
 }
