@@ -22,7 +22,7 @@ class EmployeeEdit extends Component {
 
     onTextPress() {
         const { phone, shift } = this.props;
-        Communications.text(phone, `You upcoming shift is on ${shift}`);
+        Communications.text(phone, `Your upcoming shift is on ${shift}`);
     }
 
     onAccept() {
