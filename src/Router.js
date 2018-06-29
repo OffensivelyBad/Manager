@@ -12,8 +12,11 @@ const RouterComponent = () => {
                 <Scene key="auth">
                     <Scene key="loginForm" component={LoginForm} title="Please Login" initial />
                 </Scene>
-                <Scene>
+                <Scene key="main">
                     <Scene 
+                        back
+                        backTitle="Logout"
+                        onBack={() => Actions.popTo("loginForm") }
                         rightTitle="Add"
                         onRight={() => Actions.employeeCreate() }
                         key="employeeList" 

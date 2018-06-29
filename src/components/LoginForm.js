@@ -65,6 +65,7 @@ class LoginForm extends Component {
                             placeholder="password"
                             autoCapitalize={"none"}
                             onChangeText={this.onPasswordChange.bind(this)}
+                            onSubmitEditing={this.onButtonPress.bind(this)}
                             value={this.props.password}
                         />
                     </CardSection>
