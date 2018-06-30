@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
+import { ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import Communications from 'react-native-communications';
 import EmployeeForm from './EmployeeForm';
@@ -37,34 +38,36 @@ class EmployeeEdit extends Component {
 
     render() {
         return (
-            <Card>
-                <EmployeeForm />
-                <CardSection>
-                    <Button onPress={this.onButtonPress.bind(this)}>
-                        Save Changes
-                    </Button>
-                </CardSection>
+            <ScrollView>
+                <Card>
+                    <EmployeeForm />
+                    <CardSection>
+                        <Button onPress={this.onButtonPress.bind(this)}>
+                            Save Changes
+                        </Button>
+                    </CardSection>
 
-                <CardSection>
-                    <Button onPress={this.onTextPress.bind(this)}>
-                        Text Schedule
-                    </Button>
-                </CardSection>
+                    <CardSection>
+                        <Button onPress={this.onTextPress.bind(this)}>
+                            Text Schedule
+                        </Button>
+                    </CardSection>
 
-                <CardSection>
-                    <Button onPress={() => this.setState({ showModal: !this.state.showModal })}>
-                        Fire
-                    </Button>
-                </CardSection>
+                    <CardSection>
+                        <Button onPress={() => this.setState({ showModal: !this.state.showModal })}>
+                            Fire
+                        </Button>
+                    </CardSection>
 
-                <Confirm
-                    visible={this.state.showModal}
-                    onAccept={this.onAccept.bind(this)}
-                    onDecline={this.onDecline.bind(this)}
-                >
-                    Are you sure you want to delete?
-                </Confirm>
-            </Card>
+                    <Confirm
+                        visible={this.state.showModal}
+                        onAccept={this.onAccept.bind(this)}
+                        onDecline={this.onDecline.bind(this)}
+                    >
+                        Are you sure you want to delete?
+                    </Confirm>
+                </Card>
+            </ScrollView>
         );
     }
 }

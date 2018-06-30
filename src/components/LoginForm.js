@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, Image } from 'react-native';
 import { connect } from 'react-redux';
 import { emailChanged, passwordChanged, loginUser } from '../actions';
 import { Card, CardSection, Input, Button, Spinner } from './common';
+import firebase from 'firebase';
 
 class LoginForm extends Component {
 
@@ -50,11 +51,18 @@ class LoginForm extends Component {
             <View style={styles.containerStyle}>
                 <Card>
                     <CardSection>
+                        <Image
+                            source={require('../images/B4SLogo.png')}
+                            size={{ width: 400, height: 200 }}
+                        />
+                    </CardSection>
+                    <CardSection>
                         <Input
                             label="Email"
                             placeholder="email@gmail.com"
                             onChangeText={this.onEmailChange.bind(this)}
                             value={this.props.email}
+                            autoFocus
                         />
                     </CardSection>
                     
@@ -90,7 +98,8 @@ const styles = {
     containerStyle: {
         alignItems: 'center',
         flex: 1,
-        flexDirection: 'row'
+        flexDirection: 'row',
+        backgroundColor: '#468ede'
     }
 }
 
