@@ -8,7 +8,7 @@ import firebaseconfig from './config/firebaseconfig'
 import Router from './Router';
 
 class App extends Component {
-    componentDidMount() {
+    componentWillMount() {
         firebase.initializeApp({
             apiKey: firebaseconfig.apiKey,
             authDomain: firebaseconfig.authDomain,
