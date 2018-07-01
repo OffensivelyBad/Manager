@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import Communications from 'react-native-communications';
 import EmployeeForm from './EmployeeForm';
@@ -8,7 +8,6 @@ import { employeeUpdate, employeeSave, employeeDelete } from '../actions';
 import { Card, CardSection, Button, Confirm } from './common';
 
 class EmployeeEdit extends Component {
-    state = { showModal: false }
 
     componentWillMount() {
         _.each(this.props.employee, (value, prop) => {
@@ -26,14 +25,20 @@ class EmployeeEdit extends Component {
         Communications.text(phone, `Your upcoming shift is on ${shift}`);
     }
 
-    onAccept() {
-        this.setState({ showModal: false });
-        const { uid } = this.props.employee;
-        this.props.employeeDelete({ uid });
+    showAlert() {
+        Alert.alert(
+            'Fire?',
+            'Are you sure you want to fire this employee?',
+            [
+                {text: 'Cancel', style: 'cancel'},
+                {text: 'Fire', onPress: this.onAccept.bind(this)}
+            ]
+        )
     }
 
-    onDecline() {
-        this.setState({ showModal: false });
+    onAccept() {
+        const { uid } = this.props.employee;
+        this.props.employeeDelete({ uid });
     }
 
     render() {
@@ -54,18 +59,11 @@ class EmployeeEdit extends Component {
                     </CardSection>
 
                     <CardSection>
-                        <Button onPress={() => this.setState({ showModal: !this.state.showModal })}>
+                        <Button onPress={this.showAlert.bind(this)}>
                             Fire
                         </Button>
                     </CardSection>
 
-                    <Confirm
-                        visible={this.state.showModal}
-                        onAccept={this.onAccept.bind(this)}
-                        onDecline={this.onDecline.bind(this)}
-                    >
-                        Are you sure you want to delete?
-                    </Confirm>
                 </Card>
             </ScrollView>
         );
