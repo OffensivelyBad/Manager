@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
-import { Text, View, Image } from 'react-native';
+import { Text, View, Image, Dimensions } from 'react-native';
+import firebase from 'firebase';
 import { connect } from 'react-redux';
+import { Actions } from 'react-native-router-flux';
 import { emailChanged, passwordChanged, loginUser } from '../actions';
 import { Card, CardSection, Input, Button, Spinner } from './common';
 
 class LoginForm extends Component {
+    state = { loading: true };
 
     onEmailChange(text) {
         this.props.emailChanged(text);
@@ -45,6 +48,27 @@ class LoginForm extends Component {
         }
     }
 
+    componentDidMount() {
+        this.authSubscription = firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                Actions.main();
+            }
+            else {
+                this.setState({ loading: false });
+            }
+        });
+    }
+
+    renderLoading() {
+        if (this.state.loading) {
+            return (
+                <View style={styles.loadingStyle}>
+                    <Spinner size="large" />
+                </View>
+            );
+        }
+    }
+
     render () {
         return (
             <View style={styles.containerStyle}>
@@ -61,7 +85,6 @@ class LoginForm extends Component {
                             placeholder="email@gmail.com"
                             onChangeText={this.onEmailChange.bind(this)}
                             value={this.props.email}
-                            autoFocus
                         />
                     </CardSection>
                     
@@ -83,6 +106,7 @@ class LoginForm extends Component {
                         {this.renderButton()}
                     </CardSection>
                 </Card>
+                {this.renderLoading()}
             </View>
         );
     }
@@ -99,6 +123,16 @@ const styles = {
         flex: 1,
         flexDirection: 'row',
         backgroundColor: '#468ede'
+    },
+    loadingStyle: {
+        position: 'absolute',
+        flex: 1,
+        left: 0,
+        top: 0,
+        opacity: 0.5,
+        backgroundColor: 'black',
+        width: Dimensions.get('window').width,
+        height: Dimensions.get('window').height
     }
 }
 
