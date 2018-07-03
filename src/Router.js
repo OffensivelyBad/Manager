@@ -10,6 +10,12 @@ import EmployeeEdit from './components/EmployeeEdit';
 
 class RouterComponent extends Component {
 
+    componentDidMount() {
+        if (firebase.auth().currentUser) {
+            Actions.main();
+        }
+    }
+
     render() {
         return (
             <Router>
