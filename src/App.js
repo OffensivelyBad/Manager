@@ -9,10 +9,6 @@ import firebaseconfig from './config/firebaseconfig'
 import Router from './Router';
 
 class App extends Component {
-    state = {
-        loading: true,
-        user: null
-    }
 
     componentWillMount() {
         firebase.initializeApp({
@@ -25,38 +21,12 @@ class App extends Component {
         });
     }
 
-    componentDidMount() {
-        this.authSubscription = firebase.auth().onAuthStateChanged((user) => {
-            this.setState({
-                loading: false,
-                user
-            });
-        });
-    }
-
-    renderInitialView() {
-        if (this.state.loading) {
-            return (
-                <View>
-                    <Text>
-                    loading
-                    </Text>
-                </View>
-            );
-        }
-        else {
-            const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
-            return (                
-                <Provider store={store}>
-                    <Router />
-                </Provider>
-            );
-        }
-    }
-
     render() {
-        return (
-            this.renderInitialView()
+        const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
+        return (                
+            <Provider store={store}>
+                <Router />
+            </Provider>
         );
     }
 }
