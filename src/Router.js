@@ -37,11 +37,13 @@ class RouterComponent extends Component {
                         />
                         <Scene
                             key="employeeCreate"
+                            backTitle="Employees"
                             component={EmployeeCreate}
-                            title="Create Employee"
+                            title="Add Employee"
                         />
                         <Scene 
                             key="employeeEdit"
+                            backTitle="Employees"
                             component={EmployeeEdit}
                             title="Edit Employee"
                         />

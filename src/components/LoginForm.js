@@ -70,14 +70,18 @@ class LoginForm extends Component {
     }
 
     render () {
+        const { containerStyle, buttonContainerStyle } = styles;
+
         return (
-            <View style={styles.containerStyle}>
+            <View style={containerStyle}>
                 <Card>
                     <CardSection>
-                        <Image
-                            source={require('../images/B4SLogo.png')}
-                            size={{ width: 400, height: 200 }}
-                        />
+                        <View style={buttonContainerStyle}>
+                            <Image
+                                source={require('../images/B4SLogo.png')}
+                                size={{ width: 400, height: 200 }}
+                            />
+                        </View>
                     </CardSection>
                     <CardSection>
                         <Input
@@ -133,6 +137,10 @@ const styles = {
         backgroundColor: 'black',
         width: Dimensions.get('window').width,
         height: Dimensions.get('window').height
+    },
+    buttonContainerStyle: {
+        flex: 1,
+        alignItems: 'center'
     }
 }
 
