@@ -46,9 +46,10 @@ class EmployeeEdit extends Component {
             <ScrollView>
                 <Card>
                     <EmployeeForm />
+
                     <CardSection>
-                        <Button onPress={this.onButtonPress.bind(this)}>
-                            Save Changes
+                        <Button onPress={this.showAlert.bind(this)}>
+                            Fire
                         </Button>
                     </CardSection>
 
@@ -59,8 +60,8 @@ class EmployeeEdit extends Component {
                     </CardSection>
 
                     <CardSection>
-                        <Button onPress={this.showAlert.bind(this)}>
-                            Fire
+                        <Button onPress={this.onButtonPress.bind(this)}>
+                            Save Changes
                         </Button>
                     </CardSection>
 
