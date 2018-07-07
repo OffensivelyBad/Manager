@@ -3,7 +3,8 @@ import { Actions } from 'react-native-router-flux';
 import {
     EMPLOYEE_UPDATE,
     EMPLOYEE_CREATE,
-    EMPLOYEE_SAVE_SUCCESS
+    EMPLOYEE_SAVE_SUCCESS,
+    FIRE_EMPLOYEE
 } from './types';
 
 export const employeeUpdate = ({ prop, value }) =>  {
@@ -49,4 +50,11 @@ export const employeeDelete = ({ uid }) => {
                 Actions.pop();
             });
     }
+}
+
+export const fireEmployee = ({ shouldFire }) => {
+    return {
+        type: FIRE_EMPLOYEE,
+        payload: { shouldFire }
+    };
 }

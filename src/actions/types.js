@@ -10,3 +10,5 @@ export const EMPLOYEE_CREATE = 'employee_create';
 export const EMPLOYEE_SAVE_SUCCESS = 'employee_save_success';
 
 export const EMPLOYEE_FETCH_SUCCESS = 'employee_fetch_success';
+
+export const FIRE_EMPLOYEE = 'fire_employee';

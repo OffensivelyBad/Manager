@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import firebase from 'firebase';
 import { Scene, Router, Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import { logoutUser } from './actions';
+import { logoutUser, fireEmployee } from './actions';
 import LoginForm from './components/LoginForm';
 import EmployeeList from './components/EmployeeList';
 import EmployeeCreate from './components/EmployeeCreate';
@@ -40,11 +40,14 @@ class RouterComponent extends Component {
                             backTitle="Employees"
                             component={EmployeeCreate}
                             title="Add Employee"
+                            
                         />
                         <Scene 
                             key="employeeEdit"
                             backTitle="Employees"
                             component={EmployeeEdit}
+                            rightTitle="Fire"
+                            onRight={this.props.fireEmployee.bind(this)}
                             title="Edit Employee"
                         />
                     </Scene>
@@ -54,4 +57,4 @@ class RouterComponent extends Component {
     }
 };
 
-export default connect(null, { logoutUser })(RouterComponent);
+export default connect(null, { logoutUser, fireEmployee })(RouterComponent);

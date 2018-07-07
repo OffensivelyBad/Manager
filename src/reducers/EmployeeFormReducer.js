@@ -2,13 +2,15 @@ import {
     EMPLOYEE_UPDATE,
     EMPLOYEE_CREATE,
     EMPLOYEE_SAVE_SUCCESS,
-    EMPLOYEE_DELETE_SUCCESS
+    EMPLOYEE_DELETE_SUCCESS,
+    FIRE_EMPLOYEE
 } from '../actions/types';
 
 const INITIAL_STATE = {
     name: '',
     phone: '',
-    shift: ''
+    shift: '',
+    showFire: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -21,6 +23,8 @@ export default (state = INITIAL_STATE, action) => {
             return INITIAL_STATE;
         case EMPLOYEE_DELETE_SUCCESS:
             return INITIAL_STATE;
+        case FIRE_EMPLOYEE:
+            return { ...state, showFire: action.payload.value };
         default:
             return state;
     }
