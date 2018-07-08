@@ -26,13 +26,12 @@ class EmployeeEdit extends Component {
     }
 
     renderAlert() {
-        if (this.props.showFire) {
-
+        if (this.props.showFireAlert) {
             Alert.alert(
                 'Fire?',
                 'Are you sure you want to fire this employee?',
                 [
-                    {text: 'Cancel', style: 'cancel'},
+                    {text: 'Cancel', style: 'cancel', onPress: this.onCancel.bind(this)},
                     {text: 'Fire', onPress: this.onAccept.bind(this)}
                 ]
             )
@@ -42,6 +41,10 @@ class EmployeeEdit extends Component {
     onAccept() {
         const { uid } = this.props.employee;
         this.props.employeeDelete({ uid });
+    }
+
+    onCancel() {
+        this.props.fireEmployee(false);
     }
 
     render() {
@@ -72,9 +75,9 @@ class EmployeeEdit extends Component {
 
 const mapStateToProps = (state) => {
     const { name, phone, shift } = state.employeeForm;
-    const { showFire } = state.employeeForm;
-
-    return { name, phone, shift, showFire };
+    const { showFireAlert } = state.employeeForm;
+    
+    return { name, phone, shift, showFireAlert };
 };
 
 export default connect(mapStateToProps, { employeeUpdate, employeeSave, employeeDelete, fireEmployee })(EmployeeEdit);

@@ -10,10 +10,10 @@ const INITIAL_STATE = {
     name: '',
     phone: '',
     shift: '',
-    showFire: false
+    showFireAlert: false
 };
 
-export default (state = INITIAL_STATE, action) => {
+export default (state = INITIAL_STATE, action) => {    
     switch (action.type) {
         case EMPLOYEE_UPDATE:
             return { ...state, [action.payload.prop]: action.payload.value }
@@ -24,7 +24,8 @@ export default (state = INITIAL_STATE, action) => {
         case EMPLOYEE_DELETE_SUCCESS:
             return INITIAL_STATE;
         case FIRE_EMPLOYEE:
-            return { ...state, showFire: action.payload.value };
+            console.log(`${action.type} ${action.payload} ${action.payload.value}`);
+            return { ...state, showFireAlert: action.payload.value };
         default:
             return state;
     }

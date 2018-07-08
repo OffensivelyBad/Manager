@@ -16,6 +16,10 @@ class RouterComponent extends Component {
         }
     }
 
+    fireTapped() {
+        this.props.fireEmployee(true);
+    }
+
     render() {
         return (
             <Router>

@@ -52,9 +52,9 @@ export const employeeDelete = ({ uid }) => {
     }
 }
 
-export const fireEmployee = ({ shouldFire }) => {
+export const fireEmployee = (shouldShowFire) => {
     return {
         type: FIRE_EMPLOYEE,
-        payload: { shouldFire }
+        payload: { value: shouldShowFire }
     };
 }
