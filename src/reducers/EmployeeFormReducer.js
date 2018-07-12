@@ -10,6 +10,7 @@ const INITIAL_STATE = {
     name: '',
     phone: '',
     shift: '',
+    email: '',
     showFireAlert: false
 };
 

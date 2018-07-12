@@ -1,4 +1,5 @@
 import firebase from 'firebase';
+import FirebaseAuth from '../config/FirebaseAuth';
 import { Actions } from 'react-native-router-flux';
 import {
     EMPLOYEE_UPDATE,
@@ -14,25 +15,28 @@ export const employeeUpdate = ({ prop, value }) =>  {
     };
 };
 
-export const employeeCreate = ({ name, phone, shift }) => {
+export const employeeCreate = ({ name, phone, shift, email }) => {
     const { currentUser } = firebase.auth();
+    const managerUID = currentUser.uid;
+    const clockedIn = false;
 
     return (dispatch) => {
-        firebase.database().ref(`/users/${currentUser.uid}/employees`)
-            .push({ name, phone, shift })
+        FirebaseAuth.auth().createUserWithEmailAndPassword(email, 'password')
             .then(() => {
-                dispatch({ type: EMPLOYEE_CREATE });
-                Actions.pop();
+                FirebaseAuth.database().ref(`/users`)
+                .push({ name, phone, shift, email, clockedIn, managerUID })
+                .then((key) => {
+                    addEmployeeToManager({ dispatch, employeeUID: key.key });
+                });
             });
     };
 };
 
-export const employeeSave = ({ name, phone, shift, uid }) => {
-    const { currentUser } = firebase.auth();
+export const employeeSave = ({ name, phone, shift, email, employee }) => {
 
     return (dispatch) => {
-        firebase.database().ref(`/users/${currentUser.uid}/employees/${uid}`)
-            .set({ name, phone, shift })
+        firebase.database().ref(`/users/${employee.uid}`)
+            .set({ ...employee, name, phone, shift, email })
             .then(() => {
                 dispatch({ type: EMPLOYEE_SAVE_SUCCESS });
                 Actions.pop();
@@ -41,13 +45,11 @@ export const employeeSave = ({ name, phone, shift, uid }) => {
 };
 
 export const employeeDelete = ({ uid }) => {
-    const { currentUser } = firebase.auth();
-
-    return (dispatch) => {
-        firebase.database().ref(`/users/${currentUser.uid}/employees/${uid}`)
+    return () => {
+        firebase.database().ref(`/users/${uid}`)
             .remove()
             .then(() => {
-                Actions.pop();
+                removeEmployeeFromManager(uid);
             });
     }
 }
@@ -57,4 +59,29 @@ export const fireEmployee = (shouldShowFire) => {
         type: FIRE_EMPLOYEE,
         payload: { value: shouldShowFire }
     };
+}
+
+const addEmployeeToManager = ({ dispatch, employeeUID }) => {
+    const { currentUser } = firebase.auth();
+
+    firebase.database().ref(`/users/${currentUser.uid}/employees`)
+            .push({ employeeUID })
+            .then(() => {
+                dispatch({ type: EMPLOYEE_CREATE });
+                Actions.pop();
+            });
+}
+
+const removeEmployeeFromManager = (uid) => {
+    const { currentUser } = firebase.auth();
+
+    firebase.database().ref(`/users/${currentUser.uid}/employees/`)
+        .orderByChild('employeeUID')
+        .equalTo(`${uid}`)
+        .on('child_added', snapshot => {
+            snapshot.ref.remove()
+            .then(() => {
+                Actions.pop();
+            });            
+        });
 }

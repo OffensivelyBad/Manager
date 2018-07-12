@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import Communications from 'react-native-communications';
 import EmployeeForm from './EmployeeForm';
 import { employeeUpdate, employeeSave, employeeDelete, fireEmployee } from '../actions';
-import { Card, CardSection, Button, Confirm } from './common';
+import { Card, CardSection, Button } from './common';
 
 class EmployeeEdit extends Component {
 
@@ -16,8 +16,8 @@ class EmployeeEdit extends Component {
     }
 
     onButtonPress() {
-        const { name, phone, shift } = this.props;
-        this.props.employeeSave({ name, phone, shift, uid: this.props.employee.uid })
+        const { name, phone, shift, email } = this.props;
+        this.props.employeeSave({ name, phone, shift, email, employee: this.props.employee })
     }
 
     onTextPress() {
@@ -74,10 +74,10 @@ class EmployeeEdit extends Component {
 }
 
 const mapStateToProps = (state) => {
-    const { name, phone, shift } = state.employeeForm;
+    const { name, phone, shift, email } = state.employeeForm;
     const { showFireAlert } = state.employeeForm;
     
-    return { name, phone, shift, showFireAlert };
+    return { name, phone, shift, email, showFireAlert };
 };
 
 export default connect(mapStateToProps, { employeeUpdate, employeeSave, employeeDelete, fireEmployee })(EmployeeEdit);
