@@ -24,7 +24,6 @@ export default (state = INITIAL_STATE, action) => {
         case EMPLOYEE_DELETE_SUCCESS:
             return INITIAL_STATE;
         case FIRE_EMPLOYEE:
-            console.log(`${action.type} ${action.payload} ${action.payload.value}`);
             return { ...state, showFireAlert: action.payload.value };
         default:
             return state;
