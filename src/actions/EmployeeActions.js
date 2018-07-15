@@ -23,10 +23,11 @@ export const employeeCreate = ({ name, phone, shift, email }) => {
     return (dispatch) => {
         FirebaseAuth.auth().createUserWithEmailAndPassword(email, 'password')
             .then(() => {
-                FirebaseAuth.database().ref(`/users`)
-                .push({ name, phone, shift, email, clockedIn, managerUID })
-                .then((key) => {
-                    addEmployeeToManager({ dispatch, employeeUID: key.key });
+                const newUser = FirebaseAuth.auth().currentUser;
+                FirebaseAuth.database().ref(`/users/${newUser.uid}`)
+                .set({ name, phone, shift, email, clockedIn, managerUID })
+                .then(() => {
+                    addEmployeeToManager({ dispatch, employeeUID: newUser.uid });
                 });
             });
     };
