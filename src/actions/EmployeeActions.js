@@ -19,13 +19,16 @@ export const employeeCreate = ({ name, phone, shift, email }) => {
     const { currentUser } = firebase.auth();
     const managerUID = currentUser.uid;
     const clockedIn = false;
+    const date = new Date();
+    const clockDate = date.getFullYear()+"-"+date.getMonth()+"-"+date.getDate()+" "+date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();;
+    const clockDict = {'hireDate': clockDate, 'lastClockIn': clockDate, 'lastClockOut': clockDate};
 
     return (dispatch) => {
         FirebaseAuth.auth().createUserWithEmailAndPassword(email, 'password')
             .then(() => {
                 const newUser = FirebaseAuth.auth().currentUser;
                 FirebaseAuth.database().ref(`/users/${newUser.uid}`)
-                .set({ name, phone, shift, email, clockedIn, managerUID })
+                .set({ name, phone, shift, email, clockedIn, 'clocks': clockDict, managerUID })
                 .then(() => {
                     addEmployeeToManager({ dispatch, employeeUID: newUser.uid });
                 });
